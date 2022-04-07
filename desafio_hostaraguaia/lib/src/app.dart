@@ -1,4 +1,5 @@
 import 'package:desafio_hostaraguaia/src/presentation/modules/home/home_page.dart';
+import 'package:desafio_hostaraguaia/src/shared/navigation/navigation_handler.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -6,10 +7,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       title: 'Flutter Demo',
-      home: HomePage(),
+      home: const HomePage(),
       debugShowCheckedModeBanner: false,
+      navigatorKey: NavigationHandler.appGlobalKey,
+      onGenerateRoute: NavigationHandler.appRoute,
     );
   }
 }
