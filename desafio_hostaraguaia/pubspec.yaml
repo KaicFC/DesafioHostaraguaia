@@ -12,21 +12,24 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  mobx: 
-  flutter_mobx:
+  mobx: ^2.0.6+1
+  flutter_mobx: ^2.0.4
   dio: ^4.0.0
-  shared_preferences: 
   flutter_svg: 
   google_fonts: ^2.3.1
   get_it: ^7.2.0
-
+  moor_flutter: 
+  fluttertoast: ^8.0.9
+  analyzer: ^3.4.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
-  mobx_codegen:
-  build_runner:
+  mobx_codegen: 
+  build_runner: ^2.1.8
+  moor_generator: 
+
 
 
 flutter:

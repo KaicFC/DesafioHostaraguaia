@@ -1,5 +1,3 @@
-// ignore_for_file: unused_field
-
 import 'package:desafio_hostaraguaia/src/domain/repositories/pokemons_repositories.dart';
 import 'package:mobx/mobx.dart';
 part 'home_controller.g.dart';

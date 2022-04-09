@@ -40,21 +40,6 @@ mixin _$SearchController on _SearchControllerBase, Store {
     });
   }
 
-  final _$textFormAtom = Atom(name: '_SearchControllerBase.textForm');
-
-  @override
-  String get textForm {
-    _$textFormAtom.reportRead();
-    return super.textForm;
-  }
-
-  @override
-  set textForm(String value) {
-    _$textFormAtom.reportWrite(value, super.textForm, () {
-      super.textForm = value;
-    });
-  }
-
   final _$detailsPokemonAtom =
       Atom(name: '_SearchControllerBase.detailsPokemon');
 
@@ -71,29 +56,6 @@ mixin _$SearchController on _SearchControllerBase, Store {
     });
   }
 
-  final _$imagePokemonAtom = Atom(name: '_SearchControllerBase.imagePokemon');
-
-  @override
-  String get imagePokemon {
-    _$imagePokemonAtom.reportRead();
-    return super.imagePokemon;
-  }
-
-  @override
-  set imagePokemon(String value) {
-    _$imagePokemonAtom.reportWrite(value, super.imagePokemon, () {
-      super.imagePokemon = value;
-    });
-  }
-
-  final _$getPokemonsAsyncAction =
-      AsyncAction('_SearchControllerBase.getPokemons');
-
-  @override
-  Future getPokemons() {
-    return _$getPokemonsAsyncAction.run(() => super.getPokemons());
-  }
-
   final _$getPokemonsByNameAsyncAction =
       AsyncAction('_SearchControllerBase.getPokemonsByName');
 
@@ -108,9 +70,7 @@ mixin _$SearchController on _SearchControllerBase, Store {
     return '''
 header: ${header},
 pokemonsFiltrados: ${pokemonsFiltrados},
-textForm: ${textForm},
-detailsPokemon: ${detailsPokemon},
-imagePokemon: ${imagePokemon}
+detailsPokemon: ${detailsPokemon}
     ''';
   }
 }

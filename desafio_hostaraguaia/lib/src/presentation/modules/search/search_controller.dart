@@ -1,6 +1,6 @@
-import 'package:desafio_hostaraguaia/src/data/model/header.dart';
-import 'package:desafio_hostaraguaia/src/data/model/pokemon_details_model.dart';
-import 'package:desafio_hostaraguaia/src/data/model/pokemon_model.dart';
+import 'package:desafio_hostaraguaia/src/data/model/pokemons/header.dart';
+import 'package:desafio_hostaraguaia/src/data/model/pokemons/pokemon_details_model.dart';
+import 'package:desafio_hostaraguaia/src/data/model/pokemons/pokemon_model.dart';
 import 'package:desafio_hostaraguaia/src/domain/repositories/pokemons_repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
@@ -19,23 +19,7 @@ abstract class _SearchControllerBase with Store {
   List<PokemonModel?> pokemonsFiltrados = [];
 
   @observable
-  String textForm = '';
-
-  @observable
   List<PokemonDetailsModel?> detailsPokemon = [];
-
-  @observable
-  String imagePokemon = '';
-
-  @action
-  getPokemons() async {
-    try {
-      header = await _pokemonRepositories.getPokemons();
-      return header;
-    } catch (err) {
-      debugPrint((err as Exception).toString());
-    }
-  }
 
   @action
   getPokemonsByName(String query) async {
@@ -45,7 +29,8 @@ abstract class _SearchControllerBase with Store {
       detailsPokemon.clear();
 
       var listaController = header!.pokemon!
-          .where((element) => element!.name!.toLowerCase().contains(query))
+          .where((element) =>
+              element!.name!.toLowerCase().contains(query.toLowerCase()))
           .toList();
 
       pokemonsFiltrados = listaController;

@@ -1,4 +1,5 @@
 import 'package:desafio_hostaraguaia/src/presentation/modules/details/details_page.dart';
+import 'package:desafio_hostaraguaia/src/presentation/modules/favorites/favorites_page.dart';
 import 'package:desafio_hostaraguaia/src/presentation/modules/home/home_page.dart';
 import 'package:desafio_hostaraguaia/src/presentation/modules/search/search_page.dart';
 import 'package:desafio_hostaraguaia/src/shared/navigation/nav_fade.dart';
@@ -21,10 +22,13 @@ class NavigationHandler {
         return NavFade(page: const HomePage(), settings: settings);
 
       case DetailsPage.route:
-        if (args is String) {
-          return NavFade(page: DetailsPage(name: args), settings: settings);
+        if (args is int) {
+          return NavFade(page: DetailsPage(id: args), settings: settings);
         }
         return NavFade(page: const HomePage(), settings: settings);
+
+      case FavoritesPage.route:
+        return NavFade(page: const FavoritesPage(), settings: settings);
 
       default:
         return NavFade(page: const HomePage(), settings: settings);

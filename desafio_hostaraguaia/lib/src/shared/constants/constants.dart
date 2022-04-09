@@ -17,5 +17,9 @@ class Constants {
       GoogleFonts.openSans(textStyle: style);
 
   //TextStyles
-  
+  static TextStyle textStyle1 = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: Constants.colorRed1,
+  );
 }

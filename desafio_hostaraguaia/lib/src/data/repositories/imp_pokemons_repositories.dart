@@ -1,5 +1,5 @@
-import 'package:desafio_hostaraguaia/src/data/model/header.dart';
-import 'package:desafio_hostaraguaia/src/data/model/pokemon_details_model.dart';
+import 'package:desafio_hostaraguaia/src/data/model/pokemons/header.dart';
+import 'package:desafio_hostaraguaia/src/data/model/pokemons/pokemon_details_model.dart';
 import 'package:desafio_hostaraguaia/src/domain/repositories/pokemons_repositories.dart';
 import 'package:desafio_hostaraguaia/src/shared/http/custom_dio.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +12,10 @@ class PokemonsRepositories extends IPokemonRepositories {
   @override
   Future<Header?>? getPokemons() async {
     try {
-      var response = await _customDio.instance
-          .get('${_customDio.getPokemons()}?limit=1200&offset=0'.toString());
+      var uri = Uri.parse('${_customDio.instance.options.baseUrl}pokemon/'
+              '?limit=1200&offset=0')
+          .toString();
+      var response = await _customDio.instance.get(uri.toString());
       var res = await response.data;
       return Header.fromJson(res);
     } catch (err) {
@@ -25,8 +27,9 @@ class PokemonsRepositories extends IPokemonRepositories {
   @override
   Future<PokemonDetailsModel?>? getDetailsPokemonByName(String name) async {
     try {
-      var response = await _customDio.instance
-          .get(_customDio.getDetailsPokemonByName(name).toString());
+      var uri = Uri.parse('${_customDio.instance.options.baseUrl}pokemon/$name')
+          .toString();
+      var response = await _customDio.instance.get(uri.toString());
       var res = await response.data;
       return PokemonDetailsModel.fromJson(res);
     } catch (err) {

@@ -1,5 +1,8 @@
+import 'package:desafio_hostaraguaia/src/presentation/modules/favorites/favorites_page.dart';
 import 'package:desafio_hostaraguaia/src/presentation/modules/home/home_controller.dart';
 import 'package:desafio_hostaraguaia/src/presentation/modules/search/search_page.dart';
+import 'package:desafio_hostaraguaia/src/presentation/widgets/default_button.dart';
+import 'package:desafio_hostaraguaia/src/presentation/widgets/form_custom.dart';
 import 'package:desafio_hostaraguaia/src/shared/constants/constants.dart';
 import 'package:desafio_hostaraguaia/src/shared/di/di.dart';
 import 'package:desafio_hostaraguaia/src/shared/navigation/navigation_handler.dart';
@@ -105,7 +108,8 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.symmetric(vertical: 32),
                         child: DefaultButton(
                             title: 'Ver favoritos',
-                            onPressed: () {},
+                            onPressed: () =>
+                                NavigationHandler.push(FavoritesPage.route),
                             isBlue: false,
                             isBlocked: false),
                       ),
@@ -121,125 +125,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class FormCustom extends StatelessWidget {
-  final Function(String)? onSubmitted;
-  final Color? color;
-  final TextEditingController? controller;
-  const FormCustom({
-    Key? key,
-    required this.onSubmitted,
-    required this.color,
-    required this.controller,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 48, bottom: 77),
-      child: Container(
-        height: 45,
-        width: double.maxFinite,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 10,
-              spreadRadius: 2,
-              color: Constants.shadowColor!,
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: controller,
-                  onSubmitted: onSubmitted,
-                  showCursor: true,
-                  cursorColor: const Color.fromARGB(255, 79, 79, 79),
-                  decoration: const InputDecoration(
-                    hintText: 'Digite o nome do Pokemon...',
-                    hintStyle: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Color.fromARGB(255, 189, 189, 189),
-                    ),
-                    border: InputBorder.none,
-                  ),
-                  style: GoogleFonts.openSans(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Constants.colorGrey2,
-                  ),
-                ),
-              ),
-              SizedBox(
-                child: SvgPicture.asset(
-                  'assets/search.svg',
-                  height: 22,
-                  color: color,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class DefaultButton extends StatelessWidget {
-  final String title;
-  final Function()? onPressed;
-  final bool isBlue;
-  final bool isBlocked;
-
-  const DefaultButton({
-    Key? key,
-    required this.title,
-    required this.onPressed,
-    required this.isBlue,
-    required this.isBlocked,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 41,
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(
-            isBlocked
-                ? Constants.colorGrey4
-                : isBlue
-                    ? Constants.primaryColor
-                    : Constants.colorYellow,
-          ),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ),
-        ),
-        child: Text(
-          title.toUpperCase(),
-          style: GoogleFonts.openSans(
-            color: isBlocked
-                ? Colors.white
-                : isBlue
-                    ? Colors.white
-                    : Constants.primaryColor,
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ),
-    );
-  }
-}

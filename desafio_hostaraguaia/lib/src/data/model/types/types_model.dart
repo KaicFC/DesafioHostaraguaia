@@ -1,4 +1,4 @@
-import 'package:desafio_hostaraguaia/src/data/model/type_model.dart';
+import 'package:desafio_hostaraguaia/src/data/model/types/type_model.dart';
 
 class TypesModel {
   final int? slot;

@@ -1,4 +1,4 @@
-import 'package:desafio_hostaraguaia/src/data/model/sprites_other_model.dart';
+import 'package:desafio_hostaraguaia/src/data/model/sprites/sprites_other_model.dart';
 
 class SpritesModel {
   final SpritesOtherModel? spritesOtherModel;

@@ -1,4 +1,5 @@
 import 'package:desafio_hostaraguaia/src/presentation/modules/details/details_controller.dart';
+import 'package:desafio_hostaraguaia/src/presentation/modules/favorites/favorites_controller.dart';
 import 'package:desafio_hostaraguaia/src/presentation/modules/home/home_controller.dart';
 import 'package:desafio_hostaraguaia/src/presentation/modules/search/search_controller.dart';
 import 'package:desafio_hostaraguaia/src/shared/di/di.dart';
@@ -11,6 +12,14 @@ Future<void> presentationInjection() async {
     () => SearchController(inject.get()),
   );
   inject.registerFactory<DetailsController>(
-    () => DetailsController(inject.get()),
+    () => DetailsController(
+      inject.get(),
+      inject.get(),
+      inject.get(),
+      inject.get(),
+    ),
+  );
+  inject.registerFactory<FavoritesController>(
+    () => FavoritesController(inject.get()),
   );
 }

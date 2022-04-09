@@ -1,4 +1,4 @@
-import 'package:desafio_hostaraguaia/src/data/model/ability_model.dart';
+import 'package:desafio_hostaraguaia/src/data/model/abilities/ability_model.dart';
 
 class AbilitiesModel {
   final AbilityModel? ability;

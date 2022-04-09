@@ -1,7 +1,7 @@
-import 'package:desafio_hostaraguaia/src/data/model/abilities_model.dart';
-import 'package:desafio_hostaraguaia/src/data/model/sprites_model.dart';
-import 'package:desafio_hostaraguaia/src/data/model/stats_model.dart';
-import 'package:desafio_hostaraguaia/src/data/model/types_model.dart';
+import 'package:desafio_hostaraguaia/src/data/model/abilities/abilities_model.dart';
+import 'package:desafio_hostaraguaia/src/data/model/sprites/sprites_model.dart';
+import 'package:desafio_hostaraguaia/src/data/model/stats/stats_model.dart';
+import 'package:desafio_hostaraguaia/src/data/model/types/types_model.dart';
 
 class PokemonDetailsModel {
   final List<AbilitiesModel?>? abilities;

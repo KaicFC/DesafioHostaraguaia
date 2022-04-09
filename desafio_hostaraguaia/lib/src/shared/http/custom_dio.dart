@@ -13,20 +13,10 @@ class CustomDio {
   }
 
   BaseOptions _getOptions() => BaseOptions(
-        baseUrl: "https://pokeapi.co/api/v2/pokemon/",
+        baseUrl: "https://pokeapi.co/api/v2/",
         connectTimeout: 10000,
         receiveTimeout: 10000,
       );
-
-  getPokemons() {
-    var uri = Uri.parse(_getOptions().baseUrl);
-    return uri;
-  }
-
-  getDetailsPokemonByName(String name) {
-    var uri = Uri.parse("${_getOptions().baseUrl}$name");
-    return uri;
-  }
 }
 
 InterceptorsWrapper interpceptorRequest() {

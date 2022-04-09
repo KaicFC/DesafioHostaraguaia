@@ -1,15 +1,19 @@
+import 'package:desafio_hostaraguaia/src/data/model/pokemons/pokemon_details_model.dart';
 import 'package:desafio_hostaraguaia/src/presentation/modules/details/details_controller.dart';
+import 'package:desafio_hostaraguaia/src/presentation/modules/home/home_page.dart';
+import 'package:desafio_hostaraguaia/src/presentation/widgets/text_principal.dart';
 import 'package:desafio_hostaraguaia/src/shared/constants/constants.dart';
 import 'package:desafio_hostaraguaia/src/shared/constants/strings.dart';
 import 'package:desafio_hostaraguaia/src/shared/di/di.dart';
 import 'package:desafio_hostaraguaia/src/shared/navigation/navigation_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DetailsPage extends StatefulWidget {
-  final String name;
-  const DetailsPage({Key? key, required this.name}) : super(key: key);
+  final int id;
+  const DetailsPage({Key? key, required this.id}) : super(key: key);
 
   static const String route = '/details_page';
 
@@ -22,27 +26,73 @@ class _DetailsPageState extends State<DetailsPage> {
 
   @override
   void initState() {
-    _controller.getDetailsPokemonByName(widget.name);
+    _controller.getDetailsPokemonByName(widget.id.toString());
+    //_controller.getEvolutions(widget.id);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
-      return _controller.pokemonDetailsModel == null
+      return _controller.pokemonDetailsModel == null 
+      //||  _controller.evolutionChainsModel == null
           ? const Center(child: CircularProgressIndicator())
           : Scaffold(
               body: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Appbar(controller: _controller),
+                    Appbar(
+                      controller: _controller,
+                      isFavorited: _controller.isFavorited,
+                      onPressed: () {
+                        var controller = _controller.pokemonDetailsModel!;
+                        changeFavorite(controller);
+                      },
+                    ),
                     Caracteristicas(controller: _controller),
                   ],
                 ),
               ),
             );
     });
+  }
+
+  void changeFavorite(PokemonDetailsModel controller) {
+    if (_controller.isFavorited) {
+      _controller.deleteFavorite(
+        controller.name!,
+        controller.id!,
+        controller.spritesModel!.spritesOtherModel!.spritesHomeModel!.image!,
+        controller.types![0]!.type!.name!,
+      );
+      Fluttertoast.showToast(
+        msg: "Removido dos Favoritos",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Constants.colorGrey2,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } else {
+      _controller.addFavorite(
+        controller.name!,
+        controller.id!,
+        controller.spritesModel!.spritesOtherModel!.spritesHomeModel!.image!,
+        controller.types![0]!.type!.name!,
+      );
+      Fluttertoast.showToast(
+        msg: "Pokemon Favoritado",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Constants.colorGrey2,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+    _controller.isFavorited = !_controller.isFavorited;
   }
 }
 
@@ -87,15 +137,41 @@ class Caracteristicas extends StatelessWidget {
             ),
           ),
           const Subtitle(title: 'Evoluções', padding: 34),
-          Container(
-            height: 80,
-            width: double.maxFinite,
-            color: const Color.fromARGB(47, 111, 111, 111),
-          ),
+          // Evolutions(controller: _controller),
           const Subtitle(title: 'Status Base', padding: 34),
           StatusBase(controller: _controller),
           const Subtitle(title: 'Habilidades', padding: 34),
           Habilidades(controller: _controller)
+        ],
+      ),
+    );
+  }
+}
+
+class Evolutions extends StatelessWidget {
+  const Evolutions({
+    Key? key,
+    required DetailsController controller,
+  })  : _controller = controller,
+        super(key: key);
+
+  final DetailsController _controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Column(
+        children: [
+          TextPrincipal(
+              text:
+                  '${_controller.evolutionChainsModel!.chainModel!.species!.name}'),
+          TextPrincipal(
+              text:
+                  '${_controller.evolutionChainsModel!.chainModel!.evolvesTo![0]!.speciesModel!.name}'),
+          TextPrincipal(
+              text:
+                  '${_controller.evolutionChainsModel!.chainModel!.evolvesTo![0]!.evolvesTo![0]!.speciesModel!.name}'),
         ],
       ),
     );
@@ -241,13 +317,17 @@ class Subtitle extends StatelessWidget {
 }
 
 class Appbar extends StatelessWidget {
+  final DetailsController _controller;
+  final Function()? onPressed;
+  final bool isFavorited;
+
   const Appbar({
     Key? key,
     required DetailsController controller,
+    required this.onPressed,
+    required this.isFavorited,
   })  : _controller = controller,
         super(key: key);
-
-  final DetailsController _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -267,7 +347,7 @@ class Appbar extends StatelessWidget {
                     alignment: AlignmentDirectional.centerStart,
                     iconSize: 28,
                     focusColor: Constants.colorRed1,
-                    onPressed: () => NavigationHandler.pop(),
+                    onPressed: () => NavigationHandler.push(HomePage.route),
                     icon: const Icon(
                       Icons.close,
                       color: Colors.white,
@@ -300,7 +380,7 @@ class Appbar extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 16),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -312,13 +392,16 @@ class Appbar extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ),
-                        Text(
-                          toTitleText(
-                              'Tipo: ${_controller.pokemonDetailsModel!.types![0]!.type!.name}'),
-                          style: GoogleFonts.openSans(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: Text(
+                            toTitleText(
+                                'Tipo: ${_controller.pokemonDetailsModel!.types![0]!.type!.name}'),
+                            style: GoogleFonts.openSans(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ],
@@ -332,11 +415,16 @@ class Appbar extends StatelessWidget {
               children: [
                 IconButton(
                   iconSize: 35,
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.star_border_outlined,
-                    color: Colors.white,
-                  ),
+                  onPressed: onPressed,
+                  icon: isFavorited
+                      ? Icon(
+                          Icons.star,
+                          color: Colors.white,
+                        )
+                      : Icon(
+                          Icons.star_outline,
+                          color: Colors.white,
+                        ),
                 ),
               ],
             ),
