@@ -1,5 +1,6 @@
 import 'package:desafio_hostaraguaia/src/data/model/evolutions/evolution_chains_model.dart';
 import 'package:desafio_hostaraguaia/src/data/model/pokemons/pokemon_details_model.dart';
+import 'package:desafio_hostaraguaia/src/data/model/species/evolution_chain_model.dart';
 import 'package:desafio_hostaraguaia/src/data/model/species/species_model.dart';
 import 'package:desafio_hostaraguaia/src/domain/repositories/evolution_repository.dart';
 import 'package:desafio_hostaraguaia/src/domain/repositories/favorites_repository.dart';
@@ -35,6 +36,9 @@ abstract class _DetailsControllerBase with Store {
   EvolutionChainsModel? evolutionChainsModel;
 
   @observable
+  EvolutionChainModel? evolutionChainModel;
+
+  @observable
   List listaFavoritos = [];
 
   @observable
@@ -66,7 +70,7 @@ abstract class _DetailsControllerBase with Store {
       pokemonSpeciesModel = await _speciesRepository.getSpecies(id);
 
       evolutionChainsModel = await _evolutionRepository
-          .getEvolutions(pokemonSpeciesModel!.evolutionChainModel!.url!);
+          .getEvolutions(pokemonSpeciesModel!.evolutionChainModel!);
       return evolutionChainsModel!;
     } catch (err) {
       debugPrint((err as Exception).toString());

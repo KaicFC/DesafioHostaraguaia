@@ -58,6 +58,22 @@ mixin _$DetailsController on _DetailsControllerBase, Store {
     });
   }
 
+  final _$evolutionChainModelAtom =
+      Atom(name: '_DetailsControllerBase.evolutionChainModel');
+
+  @override
+  EvolutionChainModel? get evolutionChainModel {
+    _$evolutionChainModelAtom.reportRead();
+    return super.evolutionChainModel;
+  }
+
+  @override
+  set evolutionChainModel(EvolutionChainModel? value) {
+    _$evolutionChainModelAtom.reportWrite(value, super.evolutionChainModel, () {
+      super.evolutionChainModel = value;
+    });
+  }
+
   final _$listaFavoritosAtom =
       Atom(name: '_DetailsControllerBase.listaFavoritos');
 
@@ -130,6 +146,7 @@ mixin _$DetailsController on _DetailsControllerBase, Store {
 pokemonDetailsModel: ${pokemonDetailsModel},
 pokemonSpeciesModel: ${pokemonSpeciesModel},
 evolutionChainsModel: ${evolutionChainsModel},
+evolutionChainModel: ${evolutionChainModel},
 listaFavoritos: ${listaFavoritos},
 isFavorited: ${isFavorited}
     ''';

@@ -9,9 +9,9 @@ class EvolutionRepository extends IEvolutionRepository {
   EvolutionRepository(this._customDio);
 
   @override
-  Future<EvolutionChainsModel?>? getEvolutions(String url) async {
+  Future<EvolutionChainsModel?>? getEvolutions(String? url) async {
     try {
-      var uri = Uri.parse(url).toString();
+      var uri = Uri.parse(url!).toString();
       var response = await _customDio.instance.get(uri.toString());
       var res = await response.data;
       return EvolutionChainsModel.fromJson(res);

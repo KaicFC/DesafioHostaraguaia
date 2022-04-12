@@ -1,13 +1,13 @@
 import 'package:desafio_hostaraguaia/src/data/model/abilities/ability_model.dart';
 import 'package:desafio_hostaraguaia/src/data/model/pokemons/pokemon_model.dart';
-import 'package:desafio_hostaraguaia/src/data/model/species/species_model.dart';
+import 'package:desafio_hostaraguaia/src/data/model/species/evolution_chain_model.dart';
 import 'package:desafio_hostaraguaia/src/data/model/types/type_model.dart';
 
 class Header {
   final List<AbilityModel?>? ability;
   final List<PokemonModel?>? pokemon;
   final List<TypeModel?>? type;
-  final List<PokemonSpeciesModel?>? pokemonSpecies;
+  final List<EvolutionChainModel?>? pokemonSpecies;
 
   Header({
     required this.ability,
@@ -39,10 +39,10 @@ class Header {
       });
     }
 
-    List<PokemonSpeciesModel> pokeSpecies = [];
+    List<EvolutionChainModel> pokeSpecies = [];
     if (json['results'] != null) {
       json['results'].forEach((value) {
-        pokeSpecies.add(PokemonSpeciesModel.fromJson(value));
+        pokeSpecies.add(EvolutionChainModel.fromJson(value));
       });
     }
 

@@ -27,15 +27,15 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   void initState() {
     _controller.getDetailsPokemonByName(widget.id.toString());
-    //_controller.getEvolutions(widget.id);
+    _controller.getEvolutions(widget.id);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
-      return _controller.pokemonDetailsModel == null 
-      //||  _controller.evolutionChainsModel == null
+      return _controller.pokemonDetailsModel == null ||
+              _controller.evolutionChainsModel == null
           ? const Center(child: CircularProgressIndicator())
           : Scaffold(
               body: SingleChildScrollView(
@@ -137,7 +137,7 @@ class Caracteristicas extends StatelessWidget {
             ),
           ),
           const Subtitle(title: 'Evoluções', padding: 34),
-          // Evolutions(controller: _controller),
+          Evolutions(controller: _controller),
           const Subtitle(title: 'Status Base', padding: 34),
           StatusBase(controller: _controller),
           const Subtitle(title: 'Habilidades', padding: 34),
@@ -162,6 +162,7 @@ class Evolutions extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextPrincipal(
               text:
@@ -417,11 +418,11 @@ class Appbar extends StatelessWidget {
                   iconSize: 35,
                   onPressed: onPressed,
                   icon: isFavorited
-                      ? Icon(
+                      ? const Icon(
                           Icons.star,
                           color: Colors.white,
                         )
-                      : Icon(
+                      : const Icon(
                           Icons.star_outline,
                           color: Colors.white,
                         ),
